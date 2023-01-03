@@ -1,91 +1,64 @@
+
+# You can use wildcards to create search patterns that when expanded will return a list of matching files and directories.
+# Sometimes wildcards are referred to as globs or glob patterns. Globbing is the act of expanding a wildcard into the list of
+# matching files and directories. Wildcards can be used in conjunction with most Linux commands.
+
+# If a command accepts a file or directory as an argument, then you can use a wildcard in this argument to specify a file or set of files.
+
+#  Here are the 2 main wildcards. They are the asterisk (*) and the question mark (?).
+# * => The asterisk or star as I like to call it, matches zero or more characters, it matches anything. By itself,
+# it's not really that useful, but when you combine it with other parts of file or directory names that you're looking for, it becomes powerful.
+
+# match zero or more characters => *.txt , a*, a*.txt
+# match exactly one character => ?.txt , a?, a?.txt
+# A Character classess => [] => matches any of the characters included between the brackets. Matches exactly one character => [aeiou] , ca[nt]*: can, cat, candy, catch
+# A Character classess => [!] => matches any of the characters NOT included between the brackets. Matches exactly one character => [aeiou] => baseball, cricket
+# [a-g]* => start with a,b,c,d,e,f,g
+# [3-6]*
+
+# predefined named character classes
+# •	[[:alpha:]] => alpha matches alphabetic letters. This means it matches both - lower and upper case letters.
+# •	[[:alnum:]] => alnum or alnum matches alphanumeric characters. This means it matches alpha and digits. Said another way, it matches any uppercase or lowercase letters or any decimal digits.
+# •	[[:digit:]] => 'digit' represents the numbers and decimal from 0 to 9.
+# •	[[:lower:]] => 'lower' matches any lowercase letters.
+# •	[[:space:]] => 'space' matches wide space. This means characters such as spaces, tabs and newline characters.
+# •	[[:upper:]] => 'upper' only matches uppercase letters.
+
+# *\? => match all files that end with the a question mark
+
 #!/bin/bash
-# Now your shell script can be called by another script and its exit status can be examined just like any other command.
-# Since you control the exit statuses, you can make them have a significant meaning.
-# Maybe a return code of 1 means that one type of error occurred while a return code of 2 means that a different type of error occurred.
+pattern() {
+    ls *.txt
+    ls a*
+    ls a*.txt
+    ls a*t
+    ls ?
+    ls ??
+    ls a?.txt
+    ls c[aeiou]t           #=> cat  cot
+    ls c[ueoia]t           #=> cat  cot
+    ls [a-d]*              #=> a aa b.txt cc.txt  d dd ddd
+    ls *[[:digit:]]        #=>
+    mv *.txt notes         #=> move all txt files to notes folder
+    mv *.mp3 music/        #      => move all mp3 files to music folder
+    mv *[[:digit:]] music/ #=> move all mp3 files to music folder
 
-# If you have scripts that are executing other scripts, then you can program accordingly to these returns codes if you need or want to.
-
-func_tmp() {
     echo "Invoked function temp"
     exit 0
 }
 
-# Note: functions had to be declared before they are used. It's a best practice to place all of your functions at the top of your script.
-# This ensures that they are all defined before they are used.
+# Wildcards are greate when you want to work on a group of files or directoories
 
-function func_name() {
-    HOST="google.com"
-    ping $HOST
-    RETURN_CODE="$?"
-    if [ $RETURN_CODE -ne "0" ]; then
-        echo "$HOST unreachable"
-        exit 0
-    else
-        echo "$HOST reachable"
-        func_tmp
-    fi
-    exit 1
-}
-
-# Note: When calling the function, do not use parentheses. You may have seen this syntax and
-#  style in other programming languages, but that doesn't work in shell scripts.
-if [ func_name ]; then
-    echo "Destination is pingged successfully"
-fi
-
-# Sending parameters to function
-# First parameter is stored @1, second in $2, etc.
-# $@ contains all parameters
-# $0 is the script itself, not function names
-
-func_hello() {
-    echo "All parameters: $@"
-    for NAME in $@; do
-        echo "Hello $NAME"
+function wildcards() {
+    cd /var/www;
+    cp $(*.html) /var/www-html/
+    
+    for FILE in $(*.html) do
+        cp $FILE /var/www-html/
     done
+
+    for FILE in $(/var/www/*.html) do
+        cp $FILE /var/www-html/
+    done
+    exit 0
 }
-
-func_hello Abbas Afrooz Ashkan
-
-# Functions are really like shell scripts within a shell script. Just like a shell script, a function has an exit status,
-# which is sometimes called a return code. This exit status can be explicitly set by using the return statement and following
-# it with the status you would like to return. If no return statement is used, then the exit status of the function is the exit
-# status of the last command executed in that function.
-# $? => exit status
-# 0 => success
-
-# echo "$?"
-
-# The return statement only accepts a number. And it's only integers between 0 and 255 that can be used as an exit status.
-# An exit status of 0 signifies the successful completion of a command or a function. A non-zero exit status indicates some type of error. To access the exit status of a function, use $? right after the function is called.
-# In this snippet, the value of $? will be the exit status of the my_function function. You can use the exit status of a function to make a decision.
-# For example, you can check to see if the exit status is 0. If it is not, then you know some sort of error occurred.
-# At that point you could do some sort of error handling
-
-my_function() {
-    local RETURN_STATUS=-1
-    echo "return status:$RETURN_STATUS"
-    HOST="google.com"
-    ping $HOST
-    RETURN_CODE="$?"
-    if [ $RETURN_CODE -ne "0" ]; then
-        echo "$HOST unreachable"
-        RETURN_STATUS="server error-500"
-        echo "return status: $RETURN_STATUS"
-        return $RETURN_STATUS
-    else
-        echo "$HOST reachable"
-        RETURN_STATUS="ok-200"
-        echo "return status: $RETURN_STATUS"
-        func_tmp
-    fi
-    RETURN_STATUS="not found-404"
-    echo "return status: $RETURN_STATUS"
-    return $RETURN_STATUS
-}
-
-my_function
-
-if [ my_function ]; then
-    echo "Return status => Destination is pingged successfully"
-fi
