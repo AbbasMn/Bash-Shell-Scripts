@@ -1,4 +1,7 @@
 #!/bin/bash
+# $1=parameter1=sourceDirectory
+# $2=parameter2=FilesExtentions:
+
 # Primary dir to scan
 SRC_DIR=$1
 echo "Dynamic Files source Directory: $1"
