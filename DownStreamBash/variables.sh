@@ -1,4 +1,15 @@
 #!/bin/bash
+# Global Variables
+# Variables are global and have to defined before used
+
+# Note: If a global variable is defined within a function, 
+# it is not available outside that function until the function is called and executed.
+
+
+# Local Variables
+# Can only be accesssed within the function. using local keyword: local LOCAL_VAR=10
+# Only functions can have local variables => Best practice: keep variables local in functions
+
 printf '\n\n'
 printf '%s\n' "/// Variables ///"
 SCRIPT_PATH="./DownStreamBash/sleep.sh"
