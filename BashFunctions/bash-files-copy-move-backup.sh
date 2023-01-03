@@ -10,6 +10,8 @@ FILE_COPY_PREFIX=copy
 
 # DETECTED_FILES= $(cd ./BashFunctions; ls *.jpg)
 
+printf '\n\n'
+printf '%s\n' "/// Files Copy, Move and Backup ///"
 for PICTURE in $(cd ./BashFunctions; ls *.jpg) 
 # for PICTURE in $($DETECTED_FILES) 
 do
