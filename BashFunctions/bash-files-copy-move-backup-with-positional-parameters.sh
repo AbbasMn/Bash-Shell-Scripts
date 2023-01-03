@@ -2,6 +2,18 @@
 # $1=parameter1=sourceDirectory
 # $2=parameter2=FilesExtentions:
 
+# You can access all the positional parameters starting at $1 to the very last one 
+# on the command line by using the special variable $@.
+printf '\n\n'
+printf '%s\n' "/// All Recived Parameters ///"
+for PARAM in $@
+do
+    echo "Recived parameter: $PARAM"
+done
+
+
+printf '\n\n'
+printf '%s\n' "/// Files Copy, Move and Backup ///"
 # Primary dir to scan
 SRC_DIR=$1
 echo "Dynamic Files source Directory: $1"
