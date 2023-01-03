@@ -1,4 +1,11 @@
 #!/bin/bash
+
+# Accepting User Input (STDIN)
+# If you want to accept standard input use the read command. Remember that standard input typically comes from a person typing at the keyboard, 
+# but it can also come from other sources like the output of a command in a command pipeline.
+
+read -p "Enter the Password:" USER_PASSWORD
+echo "User Credenetial is @USER_PASSWORD"
 # Primary dir to scan
 SRC_DIR=./BashFunctions/
 DEST_DIR="${SRC_DIR}/temp/"
@@ -12,6 +19,7 @@ FILE_COPY_PREFIX=copy
 
 printf '\n\n'
 printf '%s\n' "/// Files Copy, Move and Backup ///"
+
 for PICTURE in $(cd ./BashFunctions; ls *.jpg) 
 # for PICTURE in $($DETECTED_FILES) 
 do
