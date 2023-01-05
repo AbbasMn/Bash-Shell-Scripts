@@ -46,7 +46,8 @@ echo "command1"; echo "command2"; echo "command3"
 
 ping $HOST
 RETURN_CODE="$?"
-if [ $RETURN_CODE -ne "0" ]; then
+if [ $RETURN_CODE -ne "0" ]
+then
     echo "$HOST unreachable"
     exite 1
 else

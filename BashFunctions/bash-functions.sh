@@ -17,7 +17,8 @@ function func_name() {
     HOST="google.com"
     ping $HOST
     RETURN_CODE="$?"
-    if [ $RETURN_CODE -ne "0" ]; then
+    if [ $RETURN_CODE -ne "0" ]
+    then
         echo "$HOST unreachable"
         exit 0
     else
@@ -29,7 +30,8 @@ function func_name() {
 
 # Note: When calling the function, do not use parentheses. You may have seen this syntax and
 #  style in other programming languages, but that doesn't work in shell scripts.
-if [ func_name ]; then
+if [ func_name ] 
+then
     echo "Destination is pingged successfully"
 fi
 
@@ -68,7 +70,8 @@ my_function() {
     HOST="google.com"
     ping $HOST
     RETURN_CODE="$?"
-    if [ $RETURN_CODE -ne "0" ]; then
+    if [ $RETURN_CODE -ne "0" ]
+    then
         echo "$HOST unreachable"
         RETURN_STATUS="server error-500"
         echo "return status: $RETURN_STATUS"
@@ -86,6 +89,7 @@ my_function() {
 
 my_function
 
-if [ my_function ]; then
+if [ my_function ]
+then
     echo "Return status => Destination is pingged successfully"
 fi
