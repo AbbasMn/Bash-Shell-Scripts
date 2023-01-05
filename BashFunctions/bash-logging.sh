@@ -33,24 +33,33 @@
 
 
 #!/bin/bash
-function case_statements() {
-    VAR=@1
-    case $VAR in
-        start|START) 
-            start.sh
-            ;;
-        stop|STOP) 
-            kill start.sh
-            ;;
-        *) 
-            echo "$0 start|stop"; exit 1
-            ;;
-    esac
-    exit 0
+# set -x
+HOST="google.com"
+function pingGoogle() {
+    printf '\n\n'
+    printf '%s' "***Log=> "
+    printf '%s\n' "pingGoogle***"
+    local LOCAL_VAR=test
+    echo "Local Variable = $LOCAL_VAR"
+    ping $HOST
+    RETURN_CODE="$?"
+    if [ $RETURN_CODE -ne "0" ]
+    then
+        echo "$HOST unreachable"
+        exit 0
+    else
+        echo "$HOST reachable"
+        case_statements_user_entry #>> ./BashFunctions/logs
+    fi
+    exit 1
 }
 
 function case_statements_user_entry() {
-    read  -p "Enter Y/N" ANSWERE
+    printf '\n\n'
+    printf '%s' "***Log=> "
+    printf '%s\n' "Case Statementsuser Entry***"
+    HOST="google.com"
+    read  -p "Enter Y/N:  " ANSWERE
     case $ANSWERE in
         [yY]|[yY][eE][sS]) 
             echo "You answered Yes"
@@ -70,3 +79,7 @@ function case_statements_user_entry() {
     esac
     exit 0
 }
+
+pingGoogle >> ./BashFunctions/logs
+ 
+

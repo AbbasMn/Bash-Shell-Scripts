@@ -49,7 +49,16 @@
 # files copy, move and backup with-positional parameters => $0=BashScriptName $1=parameter1 $2=parameter2
 # sh ./BashFunctions/bash-files-copy-move-backup-with-positional-parameters.sh ./BashFunctions/ jpg
 # sh ./BashFunctions/bash-return-codes-and-exit-statuses.sh
-sh ./BashFunctions/bash-functions.sh
+# sh ./BashFunctions/bash-functions.sh
 
+# sh -x ./BashFunctions/bash-logging.sh >> ./BashFunctions/logs
+# sh ./BashFunctions/bash-logging.sh
 
+# sh ./DownStreamBash/loops.sh
 
+# sh ./BashFunctions/bash-grep-reading-a-file.sh
+
+# sh ./BashFunctions/bash-debugging.sh
+
+# sh ./BashFunctions/bash-debugging-tips-tricks.sh
+sh ./BashFunctions/bash-data-manipulation-and-text-transformations-with-sed.sh
